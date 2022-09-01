@@ -19,7 +19,7 @@ for ii=1:1:6
             quarter=1;
         else
             for kk=1:1:ii-1
-                if (b~=word(kk) && kk==ii)
+                if (b~=word(kk) && kk==ii-1)
                     word=[word,b];
                     quarter=1;
                 elseif b==word(kk)
