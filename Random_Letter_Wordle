@@ -1,0 +1,101 @@
+% Random_Letter_Wordle
+% Author: Kyle Douglas
+% J. Crayton Pruitt Family Department of Biomedical Engineering
+% University of Florida
+% Email: kyle.douglas897527@gmail.com
+% September-1-2022
+
+clc;clear;
+
+word='';
+
+for ii=1:1:6
+    quarter=0;
+    while quarter==0
+        a=randi([97,122]);
+        b=char(a);
+        if ii==1
+            word=[word,b];
+            quarter=1;
+        else
+            for kk=1:1:ii-1
+                if (b~=word(kk) && kk==ii)
+                    word=[word,b];
+                    quarter=1;
+                elseif b==word(kk)
+                    break;
+                end
+            end
+        end
+    end
+
+end
+
+check=0;
+
+for jj=1:1:6
+    while check == 0
+    guess=input('Enter six letters without spaces: \n','s');
+        if length(guess) == 6
+            check=1;
+        end
+    end
+
+    check=0;
+    check_word='';
+    for qq=1:1:6
+        if guess(qq) == word(qq)
+            g='g';
+            check_word=[check_word,g];
+        else
+            yellow=0;
+            for i=1:1:6
+                if guess(qq)==word(i) && guess(qq)~= word(qq)
+                    yellow=1;
+                end
+            end
+            
+            if yellow == 1
+                y='y';
+                check_word=[check_word,y];
+
+            else
+
+                r='r';
+                check_word=[check_word,r];
+            end
+        end
+    end
+    if check_word == 'gggggg'
+        fprintf("Congrats!!!! \n");
+        break;
+    end
+
+    fprintf('%s \n',check_word);
+    if jj==1;
+        letters = ["a", "b", "c", "d", "e", "f", "g", "h", "i", "j", "k", "l", "m", "n", "o", "p", "q", "r", "s", "t", "u", "v", "w", "x", "y", "z"];
+    end
+
+    for j=1:1:6
+        for k=1:1:length(letters)
+            if guess(j) == letters(k) && check_word(j) ~= "g" && check_word(j) ~= "y"
+                letters(k) = ' ';
+            elseif guess(j) == letters(k) && check_word(j) == "g"
+                letters(k) = " *" + letters(k) + "* ";
+            elseif guess(j) == letters(k) && check_word(j) == "y"
+                letters(k) = " ~" + letters(k) + "~ ";
+            end
+        end
+    end
+
+    fprintf("Letters left: ");
+    fprintf("%s",letters);
+    fprintf("\n");
+    fprintf("\n");
+    fprintf("\n");
+end
+
+if check_word ~= "gggggg"
+    fprintf("Fail!!! Answer:")
+    fprintf("%s",word);
+end
